@@ -34,12 +34,11 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-server.listen(80);
+server.listen(app.get('port'));
 
 app.get('/', routes.index);
 
 io.sockets.on('connection', function (socket) {
-	socket.emit('news', { hello: 'world' });
 	socket.on('P', function (data) {
 		socket.broadcast.emit('P', data);
 	});
