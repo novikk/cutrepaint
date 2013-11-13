@@ -2,8 +2,12 @@ var canvas, ctx;
 var lx = -1, ly = -1;
 var clicked = false;
 var socket;
+var room_id;
 
 (function() {
+    room_id = document.URL.split('/');
+    room_id = room_id[room_id.length-1];
+
     cutreSocket();
 
     canvas = document.getElementById('canvas');
@@ -24,12 +28,14 @@ var socket;
 })();
 
 function cutreSocket() {
-    socket = io.connect('http://cutrepaint.herokuapp.com/');
+    socket = io.connect('http://localhost');
+
+    socket.emit('ROOM', { room: room_id });
     socket.on('P', function (data) {
         ctx.beginPath();
-            ctx.moveTo(data.x, data.y);
-            ctx.lineTo(data.w, data.h);
-            ctx.stroke();
+        ctx.moveTo(data.x, data.y);
+        ctx.lineTo(data.w, data.h);
+        ctx.stroke();
         //socket.emit('my other event', { my: 'data' });
     });
 }

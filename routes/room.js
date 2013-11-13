@@ -13,7 +13,6 @@ exports.view = function(req, res) {
 	var id = req.params.id[0];
 	if (rooms[id] === undefined) res.send('Room not found');
 	else {
-		console.log(rooms[id]);
 		res.render('paint');
 	}
 }
@@ -34,7 +33,7 @@ exports.send_to_others = function(user, data) {
 
 		if (usr != user) {
 			var sck = users[usr].socket;
-			console.log(sck);
+
 			sck.emit('P', data);
 		}
 	}

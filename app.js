@@ -14,6 +14,12 @@ var app = express()
   , server = http.createServer(app)
   , io = require('socket.io').listen(server, { log: false });
 
+io.configure(function () { 
+	io.set("transports", ["xhr-polling"]); 
+	io.set("polling duration", 10); 
+});
+
+
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
