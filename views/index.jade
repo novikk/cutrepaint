@@ -1,4 +1,14 @@
 extends layout
 
 block content
-	canvas(id='canvas')
+	h1 CutrePaint
+	.button(id='button') Create new room
+
+block scripts
+	script(type='text/javascript').
+		(function() {
+			var btn = document.getElementById('button');
+			btn.addEventListener('click', function() {
+				location.href='/new';
+			});
+		})();
