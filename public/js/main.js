@@ -24,7 +24,7 @@ var socket;
 })();
 
 function cutreSocket() {
-    socket = io.connect('http://localhost');
+    socket = io.connect('http://cutrepaint.herokuapp.com/');
     socket.on('P', function (data) {
         ctx.beginPath();
             ctx.moveTo(data.x, data.y);
