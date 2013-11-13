@@ -11,7 +11,7 @@ var path = require('path');
 
 var app = express()
   , server = http.createServer(app)
-  , io = require('socket.io').listen(server, { log: false });
+  , io = require('socket.io').listen(server/*, { log: false }*/);
 
 // all environments
 app.set('port', process.env.PORT || 3000);
