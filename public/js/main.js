@@ -28,7 +28,7 @@ var room_id;
 })();
 
 function cutreSocket() {
-    socket = io.connect('http://localhost');
+    socket = io.connect('http://cutrepaint.herokuapp.com');
 
     socket.emit('ROOM', { room: room_id });
     socket.on('P', function (data) {
