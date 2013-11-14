@@ -1,6 +1,6 @@
 var rooms = {};
 var users = {};
-var debug = false;
+var debug = true;
 
 function log(str) {
 	if (debug) console.log(str);

@@ -32,22 +32,22 @@ h1 {
 	text-align: center;
 	-webkit-user-select: none;
 
-	/*-webkit-transition: background-color 100ms linear, border-bottom 100ms linear;
+	-webkit-transition: background-color 100ms linear, border-bottom 100ms linear;
 	-moz-transition: background-color 100ms linear, border-bottom 100ms linear;
 	-o-transition: background-color 100ms linear, border-bottom 100ms linear;
 	-ms-transition: background-color 100ms linear, border-bottom 100ms linear;
-	transition: background-color 100ms linear, border-bottom 100ms linear;*/
+	transition: background-color 100ms linear, border-bottom 100ms linear;
 }
 
 .button:hover {
 	background-color: #69B5FA;
 	border-bottom: 3px solid #4894D9;
 
-	/*-webkit-transition: all 100ms linear;
+	-webkit-transition: all 100ms linear;
 	-moz-transition: all 100ms linear;
 	-o-transition: all 100ms linear;
 	-ms-transition: all 100ms linear;
-	transition: all 100ms linear;*/
+	transition: all 100ms linear;
 }
 
 .button:active {
