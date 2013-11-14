@@ -1,5 +1,10 @@
 var rooms = {};
 var users = {};
+var debug = false;
+
+function log(str) {
+	if (debug) console.log(str);
+}
 
 exports.new = function(req, res) {
 	var room_number = Math.floor((Math.random()*100000000)+100000000);
@@ -7,6 +12,8 @@ exports.new = function(req, res) {
 		users: [],
 		actions: []
 	};
+
+	log("Created room with number " + room_number);
 	res.redirect('/' + room_number);
 }
 
@@ -25,6 +32,8 @@ exports.add_to_room = function(user, room, socket) {
 		action: undefined
 	}
 	rooms[room].users.push(user);
+
+	log("User " + user + " has joined room " + room);
 }
 
 exports.send_to_others = function(user, data) {
@@ -68,11 +77,16 @@ exports.get_data = function(user) {
 
 exports.remove_user = function(user) {
 	var room = users[user].room;
+	log("User left room " + room);
 	delete users[user];
 
 	var index = rooms[room].users.indexOf(user);
-	if (index > -1) rooms[room].users.splice(index);
+	if (index > -1) rooms[room].users.splice(index, 1);
 	if (rooms[room].users.length == 0) delete rooms[room];
 
-	console.log("Users in room: " + rooms[room]);
+	if (rooms[room] != undefined)
+		log("Users in room " + room + ": " + rooms[room].users.length);
+	else
+		log("Room " + room + " is now empty");
+	
 }
