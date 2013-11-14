@@ -64,7 +64,25 @@ io.sockets.on('connection', function (socket) {
 		room.add_to_room(id, data.room, socket);
 	});
 
-	socket.on('P', function (data) {
-		room.send_to_others(id, data);
+  socket.on('START', function(data) {
+    room.start_action(id, data);
+  });
+
+  socket.on('END', function(data) {
+    room.end_action(id);
+  });
+
+  socket.on('CURRENT', function(data) {
+    room.get_data(id);
+  });
+
+	socket.on('P', function(data) {
+		room.paint(id, data);
+    room.send_to_others(id, data);
 	});
+
+  socket.on('disconnect', function() {
+    console.log("Chao");
+    room.remove_user(id);
+  })
 });
