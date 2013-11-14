@@ -7,6 +7,7 @@ function log(str) {
 }
 
 exports.new = function(req, res) {
+	// create a new room
 	var room_number = Math.floor((Math.random()*100000000)+100000000);
 	rooms[room_number] = {
 		users: [],
@@ -26,17 +27,21 @@ exports.view = function(req, res) {
 }
 
 exports.add_to_room = function(user, room, socket) {
+	// add a new user to the system, save his room, his socket and his current action
 	users[user] = {
 		room: room,
 		socket: socket,
 		action: undefined
 	}
+
+	// add this user to the room
 	rooms[room].users.push(user);
 
 	log("User " + user + " has joined room " + room);
 }
 
 exports.send_to_others = function(user, data) {
+	// send a packet to everyone in a room except user
 	var room = users[user].room;
 
 	for (var i = 0; i < rooms[room].users.length; ++i) {
@@ -64,8 +69,11 @@ exports.start_action = function(user, data) {
 exports.end_action = function(user) {
 	var room = users[user].room;
 
-	rooms[room].actions.push(users[user].action);
-	delete users[user].action;
+	// if user has started an action
+	if (users[user].action != undefined) {
+		rooms[room].actions.push(users[user].action);
+		delete users[user].action;
+	}
 }
 
 exports.get_data = function(user) {

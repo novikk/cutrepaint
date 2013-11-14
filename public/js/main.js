@@ -9,35 +9,42 @@ var room_id;
     room_id = room_id[room_id.length-1];
 
     cutreSocket();
+})();
 
+function canvasEvents() {
     canvas = document.getElementById('canvas');
     ctx = canvas.getContext('2d');
 
     canvas.addEventListener('mousedown', function(e) {
-        socket.emit("START", {
-            x: e.pageX,
-            y: e.pageY
-        });
-        clicked = true;
+        if (!clicked) {
+            socket.emit("START", {
+                x: e.pageX,
+                y: e.pageY
+            });
+            clicked = true;
+        }
     }, false);
 
     canvas.addEventListener('mouseup', function() {
-        socket.emit("END");
-        clicked = false;
+        if (clicked) {
+            socket.emit("END");
+            clicked = false;
+        }
     }, false);
 
     canvas.addEventListener('mousemove', mmove, false);
 
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-})();
+}
 
 function cutreSocket() {
-    socket = io.connect('http://cutrepaint.herokuapp.com');
+    socket = io.connect('http://cutrepaint.herokuapp.com'); // SET YOUR WEBSOCKET URL HERE
 
     socket.on('connect', function() {
         socket.emit('ROOM', { room: room_id });
         socket.emit('CURRENT');
+        canvasEvents();
     });
 
     socket.on('disconnect', function() {
@@ -54,6 +61,7 @@ function cutreSocket() {
 
     socket.on('CURRENT', function(data) {
         var actions = data.actions;
+        console.log(actions);
         for (var i = 0; i < actions.length; ++i) {
             var pts = actions[i].points;
             ctx.beginPath();
